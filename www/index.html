@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <script src="js/ng-cordova.min.js"></script>
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <!--
+        <script src="js/pushwooshandroid.js"></script>
+    -->
+
+</head>
+<body ng-app="mailbox">
+<ion-pane>
+    <!--<ion-header-bar class="bar-stable" style="background: none;" align-title="center">
+        &lt;!&ndash;
+                <button class="button" ng-click="scanBarcode();">Add</button>
+        &ndash;&gt;
+    </ion-header-bar>
+-->
+    <ion-content>
+        <div id="header" style="margin-top: 10%;" ng-controller="HeaderCtrl">
+            <h1 id="test" class="h1 title"
+                style="font-family: 'Pacifico', cursive; font-size: 3em; text-align: center; color: white;">
+                Intellimail</h1>
+
+            <div style="margin-top: 5%;">
+                <button class="button button-block button-dark" style="width: 95%; margin: 0 auto; opacity: 0.6;"
+                        ng-click="scanBarcode();">Add new mailbox
+                </button>
+            </div>
+            <div style="margin-top: 5%;">
+                <button class="button button-block button-dark" style="width: 95%; margin: 0 auto; opacity: 0.6;"
+                        ng-click="unregisterThisDevice();">Unregister device
+                </button>
+            </div>
+        </div>
+        <div id="list" class="card" ng-controller="ListCtrl">
+            <div class="item item-divider">
+                My mailboxes
+            </div>
+            <div class="item item-text-wrap">
+                <ion-list>
+                    <ion-item ng-repeat="box in boxes">
+                        Hello, {{box.name}}!
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+    </ion-content>
+</ion-pane>
+</body>
+
+</html>
