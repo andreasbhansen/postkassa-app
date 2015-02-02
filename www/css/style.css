@@ -5,3 +5,23 @@
     -o-background-size: cover;
     background-size: cover;
 }
+
+#header {
+    margin-top: 10%;
+}
+
+.title {
+    font-family: 'Pacifico', cursive;
+    font-size: 3em;
+    text-align: center;
+    color: white;
+}
+
+.margin-top-5 {
+    margin-top: 5%;
+}
+
+.button-wide-opacity {
+    margin: 0 auto;
+    opacity: 0.6;
+}

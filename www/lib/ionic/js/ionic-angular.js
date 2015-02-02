@@ -78,10 +78,10 @@ var IonicModule = angular.module('ionic', ['ngAnimate', 'ngSanitize', 'ui.router
  * There are easy ways to cancel out of the action sheet, such as tapping the backdrop or even
  * hitting escape on the keyboard for desktop testing.
  *
- * ![Action Sheet](http://ionicframework.com.s3.amazonaws.com/docs/controllers/actionSheet.gif)
+ * ![Action Sheet](http://ionicframework.com.s3.amazonaws.com/docs/app.controllers/actionSheet.gif)
  *
  * @usage
- * To trigger an Action Sheet in your code, use the $ionicActionSheet service in your angular controllers:
+ * To trigger an Action Sheet in your code, use the $ionicActionSheet service in your angular app.controllers:
  *
  * ```js
  * angular.module('mySuperApp', ['ionic'])
@@ -7174,7 +7174,7 @@ function($scope, $element, $ionicHistory) {
     if (tabIndex === -1) {
       return;
     }
-    //Use a field like '$tabSelected' so developers won't accidentally set it in controllers etc
+    //Use a field like '$tabSelected' so developers won't accidentally set it in app.controllers etc
     if (tab.$tabSelected) {
       self.deselect(tab);
       //Try to select a new tab if we're removing a tab
@@ -9005,7 +9005,7 @@ function keyboardAttachGetClientHeight(element) {
 * @codepen JsHjf
 * @restrict E
 * @description
-* The List is a widely used interface element in almost any mobile app, and can include
+* The list is a widely used interface element in almost any mobile app, and can include
 * content ranging from basic text all the way to buttons, toggles, icons, and thumbnails.
 *
 * Both the list, which contains items, and the list items themselves can be any HTML
@@ -9827,7 +9827,7 @@ IonicModule
  *
  * Note that because we are caching these views, *we aren’t destroying scopes*. Instead, scopes
  * are being disconnected from the watch cycle. Because scopes are not being destroyed and
- * recreated, controllers are not loading again on a subsequent viewing. If the app/controller
+ * recreated, app.controllers are not loading again on a subsequent viewing. If the app/controller
  * needs to know when a view has entered or has left, then view events emitted from the
  * {@link ionic.directive:ionView} scope, such as `$ionicView.enter`, may be useful
  *
@@ -10618,7 +10618,7 @@ IonicModule
  * {@link ionic.directive:ionSideMenu} element directive, a side menu can be given instructions about
  * "when" the menu should be exposed (always viewable).
  *
- * ![Side Menu](http://ionicframework.com.s3.amazonaws.com/docs/controllers/sidemenu.gif)
+ * ![Side Menu](http://ionicframework.com.s3.amazonaws.com/docs/app.controllers/sidemenu.gif)
  *
  * For more information on side menus, check out:
  *
@@ -10708,7 +10708,7 @@ IonicModule
  * @description
  * The Slide Box is a multi-page container where each page can be swiped or dragged between:
  *
- * ![SlideBox](http://ionicframework.com.s3.amazonaws.com/docs/controllers/slideBox.gif)
+ * ![SlideBox](http://ionicframework.com.s3.amazonaws.com/docs/app.controllers/slideBox.gif)
  *
  * @usage
  * ```html
@@ -11002,7 +11002,7 @@ function($compile, $ionicConfig, $ionicBind, $ionicViewSwitcher) {
         $scope.$on('$destroy', function() {
           if (!$scope.$tabsDestroy) {
             // if the containing ionTabs directive is being destroyed
-            // then don't bother going through the controllers remove
+            // then don't bother going through the app.controllers remove
             // method, since remove will reset the active tab as each tab
             // is being destroyed, causing unnecessary view loads and transitions
             tabsCtrl.remove($scope);
@@ -11398,7 +11398,7 @@ function($ionicGesture, $timeout) {
  *
  * ## View LifeCycle and Events
  *
- * Views can be cached, which means *controllers normally only load once*, which may
+ * Views can be cached, which means *app.controllers normally only load once*, which may
  * affect your controller logic. To know when a view has entered or left, events
  * have been added that are emitted from the view's scope. These events also
  * contain data about the view, such as the title and whether the back button should

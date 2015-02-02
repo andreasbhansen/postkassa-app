@@ -594,7 +594,7 @@ window.ionic.version = '1.0.0-beta.14';
 })(window.ionic);
 
 /**
-  * Simple gesture controllers with some common gestures that emit
+  * Simple gesture app.controllers with some common gestures that emit
   * gesture events.
   *
   * Ported from github.com/EightMedia/hammer.js Gestures - thanks!
@@ -4495,7 +4495,7 @@ ionic.views.Scroll = ionic.views.View.inherit({
   /** Timestamp of last move of finger. Used to limit tracking range for deceleration speed. */
   __lastTouchMove: null,
 
-  /** List of positions, uses three indexes for each state: left, top, timestamp */
+  /** list of positions, uses three indexes for each state: left, top, timestamp */
   __positions: null,
 
 

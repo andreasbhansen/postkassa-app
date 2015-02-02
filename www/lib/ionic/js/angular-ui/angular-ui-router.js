@@ -2573,7 +2573,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    *   should be injected into the controller. If any of these dependencies are promises, 
    *   the router will wait for them all to be resolved before the controller is instantiated.
    *   If all the promises are resolved successfully, the $stateChangeSuccess event is fired
-   *   and the values of the resolved promises are injected into any controllers that reference them.
+   *   and the values of the resolved promises are injected into any app.controllers that reference them.
    *   If any  of the promises are rejected the $stateChangeError event is fired.
    *
    *   The map object is:
@@ -2910,7 +2910,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      *
      * @description
      * A method that force reloads the current state. All resolves are re-resolved, events are not re-fired, 
-     * and controllers reinstantiated (bug with controllers reinstantiating right now, fixing soon).
+     * and app.controllers reinstantiated (bug with app.controllers reinstantiating right now, fixing soon).
      *
      * @example
      * <pre>
