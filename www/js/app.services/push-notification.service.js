@@ -46,20 +46,20 @@ function PushNotificationService (BackendService, LocalDatabaseService, $rootSco
                     {
                         var pushToken = status;
 
-
                         window.localStorage['token'] = status;
 
                         LocalDatabaseService
                             .addMailboxToDB(mailboxId, mailboxName)
                             .then(function (res) {
+                                // Publish the result over $broadcast, works as pub/sub
                                 $rootScope.$broadcast('alerter:mailbox-added', res);
-                            });
 
-                        /*BackendService
-                            .addDeviceToMailbox(pushToken, mailboxId)
-                            .then(function (res) {
-                                console.log(JSON.stringify(res));
-                            });*/
+                                BackendService
+                                    .addDeviceToMailboxObject(pushToken, mailboxId)
+                                    .then(function (res) {
+                                        console.log(JSON.stringify(res));
+                                    });
+                            });
                     },
                     function (status)
                     {

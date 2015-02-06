@@ -23,6 +23,7 @@ function HeaderController($cordovaBarcodeScanner, $ionicPopup, LocalDatabaseServ
     vm.mailbox_name = "";
     vm.scanBarcode = scanBarcode;
     vm.unregisterThisDevice = unregisterThisDevice;
+    vm.deleteLocalDatabase = deleteLocalDatabase;
 
 
     /* * * * * * * * *
@@ -35,32 +36,52 @@ function HeaderController($cordovaBarcodeScanner, $ionicPopup, LocalDatabaseServ
             .scan()
             .then(function (imageData)
             {
-                var confirmPopup = $ionicPopup.prompt({
-                    title: 'Adding new mailbox!',
-                    template: 'Enter a name for your mailbox! Examples: Home, Cottage, Work',
-                    inputType: 'text',
-                    inputPlaceholder: 'Mailbox name...'
-                });
+                var mailbox_id = imageData.text;
 
-                confirmPopup.then(function (popupResult)
-                {
-                    var mailboxName = popupResult;
+                LocalDatabaseService
+                    .isMailboxAlreadyInDB(mailbox_id)
+                    .then(function (exists)
+                    {
+                        if (exists)
+                        {
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'Error',
+                                template: 'You already subscribe to notifications from this mailbox.'
+                            });
+                            alertPopup.then(function (res)
+                            {
+                            });
 
-                    if (mailboxName === "")
-                    {
-                        mailboxName = "Unnamed mailbox";
-                    }
+                        }
+                        else
+                        {
+                            var confirmPopup = $ionicPopup.prompt({
+                                title: 'Adding new mailbox!',
+                                template: 'Enter a name for your mailbox! Examples: Home, Cottage, Work',
+                                inputType: 'text',
+                                inputPlaceholder: 'Mailbox name...'
+                            });
 
-                    if (popupResult)
-                    {
-                        var mailboxId = imageData.text;
-                        PushNotificationService.deviceReady(mailboxId, mailboxName);
-                    }
-                    else
-                    {
-                        console.log('You are not sure');
-                    }
-                });
+                            confirmPopup.then(function (popupResult)
+                            {
+                                var mailboxName = popupResult;
+
+                                if (mailboxName === "")
+                                {
+                                    mailboxName = "Unnamed mailbox";
+                                }
+
+                                if (popupResult)
+                                {
+                                    PushNotificationService.deviceReady(mailbox_id, mailboxName);
+                                }
+                                else
+                                {
+                                    console.log('You are not sure');
+                                }
+                            });
+                        }
+                    });
 
             }, function (error)
             {

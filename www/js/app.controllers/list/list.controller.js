@@ -9,14 +9,14 @@ angular
     .controller('ListCtrl', ListController);
 
 // Dependency injection
-ListController.$inject = ['$scope', '$ionicPopup', '$ionicPlatform', 'LocalDatabaseService'];
+ListController.$inject = ['$scope', '$ionicPlatform', 'LocalDatabaseService', 'BackendService'];
 
 
 /* * * * * * * * *
  * Main controller function
  * * * * * * * * */
 
-function ListController($scope, $ionicPopup, $ionicPlatform, LocalDatabaseService)
+function ListController($scope, $ionicPlatform, LocalDatabaseService, BackendService)
 {
     var vm = this;
 
@@ -27,7 +27,7 @@ function ListController($scope, $ionicPopup, $ionicPlatform, LocalDatabaseServic
     // Ensure that Ionic is ready to go (only for initial database fetching)!
     $ionicPlatform.ready(function ()
     {
-        fetchMailboxes ()
+        fetchMailboxes()
             .then(function (data)
             {
                 vm.boxes = data;
@@ -45,31 +45,41 @@ function ListController($scope, $ionicPopup, $ionicPlatform, LocalDatabaseServic
      * Helper functions
      * * * * * * * * */
 
-    function fetchMailboxes ()
+    function fetchMailboxes()
     {
         return LocalDatabaseService.fetchMailboxListFromDB();
     }
 
-    function updateTableOnChange () {
+    function updateTableOnChange()
+    {
         // Clean cache box array before receiving updated from database
         vm.boxes.length = 0;
         vm.boxes = [];
-        fetchMailboxes ()
+        fetchMailboxes()
             .then(function (data)
             {
                 vm.boxes = data;
             })
     }
 
-    function removeMailbox (box)
+    function removeMailbox(box)
     {
+        var token = window.localStorage['token'];
         LocalDatabaseService
-            .removeMailboxFromDB(box)
-            .then(function (res)
+            .removeMailboxFromLocalDB(box)
+            .then(function (localRes)
             {
-                console.log(res);
+                //aole.log(res);
                 updateTableOnChange();
+
+                console.log(token);
+                console.log(box.mailbox_id);
+                BackendService
+                    .removeDeviceFromMailboxObject(token, box.mailbox_id)
+                    .then(function (remoteRes)
+                    {
+                        console.log(JSON.stringify(remoteRes));
+                    });
             });
     }
-
 }

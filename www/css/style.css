@@ -21,7 +21,6 @@
     margin-top: 5%;
 }
 
-.button-wide-opacity {
-    margin: 0 auto;
-    opacity: 0.6;
+.button-margin {
+    margin-left: 1.4vw;
 }

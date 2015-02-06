@@ -11,7 +11,7 @@
     <!-- Ionic + Angular Budle -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <script src="js/ng-cordova.min.js"></script>
+    <script src="js/libs/ng-cordova.min.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
@@ -42,21 +42,21 @@
             <h1 class="title">Intellimail</h1>
 
             <div class="margin-top-5">
-                <button class="button button-block button-dark button-wide-opacity"
+                <button class="button button-block button-balanced button-margin"
                         ng-click="vm.scanBarcode();">Add new mailbox
                 </button>
             </div>
-            <div class="margin-top-5">
-                <button class="button button-block button-dark button-wide-opacity"
-                        ng-click="vm.unregisterThisDevice();">Unregister device
-                </button>
-            </div>
-
             <!--            <div class="margin-top-5">
                             <button class="button button-block button-dark button-wide-opacity"
-                                    ng-click="vm.deleteLocalDatabase();">Delete database
+                                    ng-click="vm.unregisterThisDevice();">Unregister device
                             </button>
                         </div>-->
+
+            <div class="margin-top-5">
+                <button class="button button-block button-dark button-wide-opacity"
+                        ng-click="vm.deleteLocalDatabase();">Delete database
+                </button>
+            </div>
         </div>
         <div id="list" class="card" ng-controller="ListCtrl as vm">
             <div class="item item-divider">
@@ -66,7 +66,8 @@
                 <ion-list
                         show-delete="true">
                     <ion-item ng-repeat="box in vm.boxes">
-                        <ion-delete-button ng-click="vm.removeMailbox(box)" class="ion-minus-circled"></ion-delete-button>
+                        <ion-delete-button ng-click="vm.removeMailbox(box)"
+                                           class="ion-minus-circled"></ion-delete-button>
                         {{box.mailbox_name}}
                     </ion-item>
                 </ion-list>

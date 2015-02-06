@@ -8,20 +8,40 @@ angular
     .module('mailbox')
     .service('LocalDatabaseService', LocalDatabaseService);
 
-LocalDatabaseService.$inject = ['$cordovaSQLite', '$q'];
+LocalDatabaseService.$inject = ['$cordovaSQLite', '$q', 'BackendService'];
 
 var db = null;
 
 
-function LocalDatabaseService($cordovaSQLite, $q)
+function LocalDatabaseService($cordovaSQLite, $q, BackendService)
 {
 
     var mailboxes = [];
 
     return {
+        isMailboxAlreadyInDB: function (mailbox_id)
+        {
+            var q = $q.defer();
+
+            var exists = false;
+            var doesMailboxExistInDBQuery = "SELECT * FROM mailboxes WHERE mailbox_id = ?";
+            db = $cordovaSQLite.openDB('app');
+            $cordovaSQLite
+                .execute(db, doesMailboxExistInDBQuery, [mailbox_id])
+                .then(function (res)
+                {
+                    console.log(JSON.stringify(res));
+
+                    exists = res.rows.length >= 1;
+                    console.log(exists);
+                    q.resolve(exists);
+                });
+
+            return q.promise;
+        },
         removeDB: function ()
         {
-            $cordovaSQLite.deleteDb('app', function (success)
+            $cordovaSQLite.deleteDB('app', function (success)
             {
                 alert(success);
             }, function (err)
@@ -45,7 +65,6 @@ function LocalDatabaseService($cordovaSQLite, $q)
                         .then(function (res)
                         {
                             q.resolve(res);
-                            //alert("INSERT ID -> " + JSON.stringify(res.insertId));
                         }, function (err)
                         {
                             q.reject(err);
@@ -54,21 +73,21 @@ function LocalDatabaseService($cordovaSQLite, $q)
                 });
             return q.promise;
         },
-        removeMailboxFromDB: function (mailbox)
+        removeMailboxFromLocalDB: function (mailbox)
         {
             var q = $q.defer();
 
-            var row_id = mailbox.id;
             var removeMailboxQuery = "DELETE FROM mailboxes WHERE id = ?";
 
             db = $cordovaSQLite.openDB('app');
 
             $cordovaSQLite
-                .execute(db, removeMailboxQuery, [row_id])
+                .execute(db, removeMailboxQuery, [mailbox.id])
                 .then(function (res)
                 {
                     q.resolve(res);
-                }, function (err) {
+                }, function (err)
+                {
                     q.reject(err);
                 });
             return q.promise;
@@ -102,7 +121,7 @@ function LocalDatabaseService($cordovaSQLite, $q)
                             }
                             else
                             {
-                                alert("No results found");
+                                alert("No mailboxes found. Add one!");
                             }
 
                         }, function (err)
