@@ -22,8 +22,6 @@ function HeaderController($cordovaBarcodeScanner, $ionicPopup, LocalDatabaseServ
 
     vm.mailbox_name = "";
     vm.scanBarcode = scanBarcode;
-    vm.unregisterThisDevice = unregisterThisDevice;
-    vm.deleteLocalDatabase = deleteLocalDatabase;
 
 
     /* * * * * * * * *
